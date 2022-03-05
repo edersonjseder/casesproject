@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -43,13 +42,9 @@ public class Case implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "title")
 	private String title;
-	@Column(name = "description")
 	private String description;
-	@Column(name = "severity")
 	private Integer severity;
-	@Column(name = "status")
 	@Enumerated(EnumType.STRING)
 	private Status status;
 	@ManyToOne(fetch = FetchType.LAZY)

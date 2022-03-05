@@ -2,7 +2,6 @@ package com.casesproject.casesproject.domain;
 
 import java.io.Serializable;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -34,7 +33,6 @@ public class Note implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "details")
 	private String details;
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "case_id")

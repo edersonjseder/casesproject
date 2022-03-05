@@ -29,11 +29,9 @@ public class User implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
-	@Column(name = "firstName")
 	private String firstName;
-	@Column(name = "lastName")
 	private String lastName;
-	@Column(name = "email", unique = true)
+	@Column(unique = true)
 	private String email;
 
 }
