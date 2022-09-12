@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cases-mongo-app-svc
+spec:
+  selector:
+    app: cases-mongo-app
+  type: LoadBalancer
+  ports:
+    - targetPort: 8071
+      port: 8070

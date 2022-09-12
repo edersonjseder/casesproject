@@ -1,22 +1,21 @@
 package com.casesproject.casesproject.enums;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.stream.Stream;
 
 public enum Status {
-	OPEN("OPEN"),
-	CLOSED("CLOSED");
+	OPEN("Is Open"),
+	CLOSED("Is Closed");
 	
 	private String code;
 	
-	private Status(String code) {
+	Status(String code) {
 		this.code=code;
 	}
-	
-	@JsonCreator
+
 	public static Status decode(final String code) {
-		return Stream.of(Status.values()).filter(targetEnum -> targetEnum.code.equals(code)).findFirst().orElse(null);
+		return Stream.of(Status.values()).filter(targetEnum -> targetEnum.name().equals(code)).findFirst().orElse(null);
 	}
 	
 	@JsonValue

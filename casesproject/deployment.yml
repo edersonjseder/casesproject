@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cases-mongo-app
+  labels:
+    app: cases-mongo-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cases-mongo-app
+  template:
+    metadata:
+      labels:
+        app: cases-mongo-app
+    spec:
+      containers:
+        - name: cases-mongo-app
+          image: casesprojectaks.azurecr.io/casesproject:1.0.0
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8071

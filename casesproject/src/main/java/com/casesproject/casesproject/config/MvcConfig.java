@@ -22,7 +22,6 @@ public class MvcConfig implements WebMvcConfigurer {
         super();
         this.beanFactory = beanFactory;
     }
-	
 
     @Override
     public void addFormatters(FormatterRegistry registry) {

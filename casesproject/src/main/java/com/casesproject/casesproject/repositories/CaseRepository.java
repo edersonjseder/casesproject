@@ -1,16 +1,16 @@
 package com.casesproject.casesproject.repositories;
 
-import java.util.List;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.stereotype.Repository;
-
 import com.casesproject.casesproject.domain.Case;
 import com.casesproject.casesproject.enums.Status;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-@Repository
-public interface CaseRepository extends JpaRepository<Case, Integer>{
+import java.util.List;
+import java.util.Optional;
+
+//@Repository
+public interface CaseRepository extends MongoRepository<Case, Long> {//JpaRepository<Case, Integer>{
+	Optional<Case> findById(Long id);
 	List<Case> findAllByStatus(Status status);
-	List<Case> findAllByUserId(Integer userId);
-	List<Case> findAllByStatusAndUserId(Status status, Integer userId);
+	List<Case> findAllByUserId(Long userId);
+	List<Case> findAllByStatusAndUserId(Status status, Long userId);
 }

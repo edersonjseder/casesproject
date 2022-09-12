@@ -1,41 +1,36 @@
 package com.casesproject.casesproject.domain;
 
-import java.io.Serializable;
-
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
+//@Entity
 @Builder
-@Table(name = "note")
+//@Table(name = "note")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class Note implements Serializable {
-	private static final long serialVersionUID = 12L;
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Document(collection = "notes")
+public class Note {
+
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	private String details;
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "case_id")
+	//@ManyToOne(fetch = FetchType.LAZY)
+	//@JoinColumn(name = "case_id")
 	@JsonIgnore
 	private Case mCase;
+
+	@Override
+	public String toString() {
+		return "Note{" +
+				"id=" + id +
+				", details='" + details + '\'' +
+				", mCase=" + (mCase != null ? mCase.toString() : "{}") +
+				'}';
+	}
 }

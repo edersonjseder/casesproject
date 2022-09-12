@@ -1,20 +1,15 @@
 package com.casesproject.casesproject.controllers;
 
-import java.util.List;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.casesproject.casesproject.domain.Case;
 import com.casesproject.casesproject.enums.Status;
 import com.casesproject.casesproject.repositories.dto.CaseDto;
 import com.casesproject.casesproject.services.CaseService;
+import com.casesproject.casesproject.utils.Traceable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -23,31 +18,39 @@ public class CaseResource {
 	public CaseResource(CaseService caseService) {
 		this.caseService = caseService;
 	}
+
+	@GetMapping("/cases")
+	@Traceable
+	public ResponseEntity<List<Case>> getAllCases() {
+		List<Case> cases = caseService.getAllCases();
+		return new ResponseEntity<>(cases, HttpStatus.OK);
+	}
 	
 	@GetMapping("/cases/status/{status}")
+	@Traceable
 	public ResponseEntity<List<Case>> getCaseWithStatus(@PathVariable Status status) {
 		List<Case> cases = caseService.getAllCasesWithStatus(status);
 		return new ResponseEntity<>(cases, HttpStatus.OK);
 	}
 	
 	@GetMapping("/cases/user/{userId}")
-	public ResponseEntity<List<Case>> getOpenCases(@PathVariable Integer userId) {
+	public ResponseEntity<List<Case>> getOpenCases(@PathVariable Long userId) {
 		List<Case> cases = caseService.getCasesByUserId(userId);
 		return new ResponseEntity<>(cases, HttpStatus.OK);
 	}
 	
 	@GetMapping("/cases/user/{userId}/status/{status}")
-	public ResponseEntity<List<Case>> getOpenCases(@PathVariable Integer userId, @PathVariable Status status) {
-		List<Case> cases = caseService.getCasesByUserIdAndStatus(userId, status);
-		return new ResponseEntity<>(cases, HttpStatus.OK);
+	@Traceable
+	public List<Case> getOpenCases(@PathVariable Long userId, @PathVariable Status status) {
+		return caseService.getCasesByUserIdAndStatus(userId, status);
 	}
 	
 	@GetMapping("/cases/{caseId}")
-	public ResponseEntity<Case> getCase(@PathVariable Integer caseId) {
-		Case mCase = caseService.getCaseById(caseId);
-		return new ResponseEntity<>(mCase, HttpStatus.OK);
+	public Case getCase(@PathVariable Long caseId) {
+		return caseService.getCaseById(caseId);
 	}
-	
+
+	@Traceable
 	@PostMapping(value = "/cases/create", consumes = "application/json")
 	public ResponseEntity<Case> createCase(@RequestBody CaseDto caseDto) {
 		Case createdCase = caseService.createCase(caseDto);

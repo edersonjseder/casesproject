@@ -1,5 +1,7 @@
 package com.casesproject.casesproject.services;
 
+import com.casesproject.casesproject.repositories.dto.CaseDto;
+import com.casesproject.casesproject.utils.UniqueIdGen;
 import org.springframework.stereotype.Service;
 
 import com.casesproject.casesproject.domain.Case;
@@ -19,7 +21,7 @@ public class NoteService {
 		this.caseRepository = caseRepository;
 	}
 	
-	public Note addNoteByCaseId(Integer caseId, String detail) {
+	public Note addNoteByCaseId(Long caseId, String detail) {
 		Case mCase = new Case();
 		try {
 			mCase = caseRepository.findById(caseId)
@@ -29,5 +31,10 @@ public class NoteService {
 		}
 		
 		return noteRepository.save(Note.builder().details(detail).mCase(mCase).build());
+	}
+
+	public void saveNote(CaseDto caseDto, Case mCase) {
+		var uniqueIdGen = new UniqueIdGen();
+		noteRepository.save(Note.builder().id(uniqueIdGen.idGen()).details(caseDto.getNoteDetail()).mCase(mCase).build());
 	}
 }

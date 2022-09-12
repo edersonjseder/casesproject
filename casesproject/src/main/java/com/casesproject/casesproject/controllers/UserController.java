@@ -1,14 +1,13 @@
 package com.casesproject.casesproject.controllers;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.casesproject.casesproject.domain.User;
 import com.casesproject.casesproject.services.UserService;
+import com.casesproject.casesproject.utils.Traceable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 
 @RestController
@@ -20,12 +19,16 @@ public class UserController {
 		this.userService = userService;
 	}
 
+	@GetMapping("/users")
+	@Traceable
+	public ResponseEntity<List<User>> getAllUsers() {
+		var users = userService.getAllUsers();
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
+
 	@PostMapping(value = "/cases/user/register", consumes = "application/json")
-	public ResponseEntity<?> registerUser(@RequestBody User user) {
-		
-		User newUser = userService.saveUser(user);
-		
-		return new ResponseEntity<User>(newUser, HttpStatus.CREATED);
+	public User registerUser(@RequestBody User user) {
+		return userService.saveUser(user);
 	}
 
 }

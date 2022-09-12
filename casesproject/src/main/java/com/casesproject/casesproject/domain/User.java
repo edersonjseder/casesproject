@@ -1,37 +1,28 @@
 package com.casesproject.casesproject.domain;
 
-import java.io.Serializable;
+import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
-
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
-@Entity
+//@Entity
 @Builder
-@Table(name = "users")
+//@Table(name = "users")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@EqualsAndHashCode
-public class User implements Serializable {
-	private static final long serialVersionUID = 13L;
+@ToString
+//@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@Document(collection = "users")
+public class User {
+
+	//@GeneratedValue(strategy = GenerationType.AUTO)
+	//@Column(unique = true, nullable = false)
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Long id;
 	private String firstName;
 	private String lastName;
-	@Column(unique = true)
+	//@Column(unique = true)
 	private String email;
 
 }

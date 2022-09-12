@@ -21,7 +21,7 @@ public class NoteResource {
 	}
 	
 	@PostMapping(value = "/case/{caseId}/addNote", consumes = "text/plain")
-	public ResponseEntity<Note> addNote(@PathVariable Integer caseId, @RequestBody String detail) {
+	public ResponseEntity<Note> addNote(@PathVariable Long caseId, @RequestBody String detail) {
 		Note note = noteService.addNoteByCaseId(caseId, detail);
 		return new ResponseEntity<Note>(note, HttpStatus.CREATED);
 	}
